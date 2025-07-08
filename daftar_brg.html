@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cekstok - Cari Barang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#1E40AF',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
+            min-height: 100vh;
+        }
+        .search-container {
+            transition: all 0.3s ease;
+        }
+        .search-container:focus-within {
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+        }
+        .item-card {
+            transition: all 0.2s ease;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <div class="min-h-screen flex flex-col">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-blue-600 mb-2">Daftar Barang</h1>
+        </div>
+        <!-- Main Content -->
+        <div class="flex flex-1 container mx-auto px-4 py-6">
+            <!-- Content Area -->
+            <main class="flex-1">
+                <div class="bg-white rounded-xl shadow-sm p-6 mb-6">
+                    
+                    <div id="searchResults" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Hasil pencarian akan ditampilkan di sini -->
+                    </div>
+                    
+                    <div id="noResults" class="text-center py-10 hidden">
+                        <div class="text-gray-400 text-5xl mb-4">
+                            <i class="fas fa-box-open"></i>
+                        </div>
+                        <h3 class="text-xl font-medium text-gray-500">Barang tidak ditemukan</h3>
+                        <p class="text-gray-400 mt-2">Coba kata kunci lain atau periksa ejaan</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    <div class="flex justify-center mt-auto mb-6 mx-auto">
+        <a href="dashboard.html" class="inline-flex items-center px-4 py-2 border border-gray-300 text-white bg-blue-500 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg hover:bg-blue-600">
+            <i class="mr-2 padding-bottom 20px"></i> Kembali
+        </a>
+    </div>
+
+    <script>
+        // Data barang (biasanya dari database)
+        const items = [
+            { id: 1, name: "Susu UHT Frisian Flag", quantity: 120, category: "Minuman", code: "PRD001", date: "2024-04-01", expiry: "2024-07-05" },
+            { id: 2, name: "Biskuit Roma Kelapa", quantity: 85, category: "Makanan Ringan", code: "PRD045", date: "2024-03-15", expiry: "2024-06-20" },
+            { id: 3, name: "Minyak Goreng Filma", quantity: 200, category: "Bahan Masakan", code: "PRD112", date: "2024-04-05", expiry: "2024-10-12" },
+            { id: 4, name: "Sabun Mandi Lifebuoy", quantity: 150, category: "Perawatan Tubuh", code: "PRD087", date: "2024-02-28", expiry: "2025-02-28" },
+            { id: 5, name: "Teh Celup Sariwangi", quantity: 90, category: "Minuman", code: "PRD023", date: "2024-03-20", expiry: "2024-09-15" },
+            { id: 6, name: "Mie Instan Indomie Goreng", quantity: 300, category: "Makanan Instan", code: "PRD056", date: "2024-04-02", expiry: "2024-10-30" },
+            { id: 7, name: "Shampoo Clear Men", quantity: 75, category: "Perawatan Rambut", code: "PRD092", date: "2024-03-10", expiry: "2025-03-10" },
+            { id: 8, name: "Kopi Kapal Api", quantity: 110, category: "Minuman", code: "PRD031", date: "2024-03-25", expiry: "2024-12-01" }
+        ];
+
+        // Fungsi untuk menampilkan hasil pencarian
+        function displayResults(searchTerm = '') {
+            const resultsContainer = document.getElementById('searchResults');
+            const noResults = document.getElementById('noResults');
+            
+            // Reset kontainer
+            resultsContainer.innerHTML = '';
+            
+            // Filter item berdasarkan kata kunci
+            const filteredItems = searchTerm 
+                ? items.filter(item => 
+                    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    item.code.toLowerCase().includes(searchTerm.toLowerCase())
+                  )
+                : items;
+            
+            if (filteredItems.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+            
+            // Tampilkan item yang sesuai
+            filteredItems.forEach(item => {
+                const itemCard = document.createElement('div');
+                itemCard.className = 'item-card bg-white rounded-lg border border-gray-200 p-4';
+                itemCard.innerHTML = `
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                            <i class="fas fa-box"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-semibold text-lg text-gray-800">${item.name}</h3>
+                            <div class="text-sm text-gray-500 mt-1">${item.category} • Kode: ${item.code}</div>
+                            <div class="flex mt-3">
+                                <div class="mr-6">
+                                    <div class="text-xs text-gray-500">Stok</div>
+                                    <div class="font-medium">${item.quantity} pcs</div>
+                                </div>
+                                <div class="mr-6">
+                                    <div class="text-xs text-gray-500">Tanggal Masuk</div>
+                                    <div class="font-medium">${formatDate(item.date)}</div>
+                                </div>
+                                <div>
+                                    <div class="text-xs text-gray-500">Kadaluarsa</div>
+                                    <div class="font-medium">${formatDate(item.expiry)}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                resultsContainer.appendChild(itemCard);
+            });
+        }
+
+        // Format tanggal menjadi DD MMM YYYY
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+            return date.toLocaleDateString('id-ID', options);
+        }
+
+        // Event listener untuk input pencarian
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tampilkan semua item saat halaman dimuat
+            displayResults();
+            
+            const searchInput = document.getElementById('searchInput');
+            
+            searchInput.addEventListener('input', function() {
+                displayResults(this.value);
+            });
+            
+            // Fokus ke input pencarian saat halaman dimuat
+            searchInput.focus();
+        });
+    </script>
+</body>
+</html>

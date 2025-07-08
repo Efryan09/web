@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tambah Barang - CEKSTOK</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
+            min-height: 100vh;
+        }
+        
+        .form-card {
+            box-shadow: 0 10px 30px rgba(0, 0, 150, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .form-card:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 200, 0.15);
+        }
+        
+        .input-group:focus-within {
+            border-color: #3b82f6;
+        }
+        
+        .input-group:focus-within i {
+            color: #3b82f6;
+        }
+        
+        .btn-save {
+            transition: all 0.3s ease;
+        }
+        
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+        }
+        
+        .header-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            z-index: -1;
+        }
+        
+        .wave-bg svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+        
+        .wave-bg .shape-fill {
+            fill: #3b82f6;
+        }
+    </style>
+</head>
+<body class="relative">
+    <div class="wave-bg">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".05" class="shape-fill"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".1" class="shape-fill"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" opacity=".15" class="shape-fill"></path>
+        </svg>
+    </div>
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-3xl mx-auto">
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-blue-600 mb-2">Tambah Barang</h1>
+            </div>
+            
+            <div class="form-card bg-white">
+                <div class="p-6 md:p-8">
+                    <form id="addItemForm">
+                        <!-- Nama Barang -->
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2" for="itemName">
+                                Nama Barang
+                            </label>
+                            <div class="input-group relative flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:border-blue-500">
+                                <i class="fas fa-box text-gray-400 px-4"></i>
+                                <input 
+                                    type="text" 
+                                    id="itemName" 
+                                    class="w-full py-3 px-2 focus:outline-none text-gray-700" 
+                                    placeholder="Masukkan nama barang"
+                                    required
+                                >
+                            </div>
+                        </div>
+                        
+                        <!-- Jumlah -->
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-medium mb-2" for="quantity">
+                                Jumlah
+                            </label>
+                            <div class="input-group relative flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:border-blue-500">
+                                <i class="fas fa-hashtag text-gray-400 px-4"></i>
+                                <input 
+                                    type="number" 
+                                    id="quantity" 
+                                    class="w-full py-3 px-2 focus:outline-none text-gray-700" 
+                                    placeholder="Masukkan jumlah"
+                                    min="1"
+                                    required
+                                >
+                            </div>
+                        </div>
+                        
+                        <!-- Tanggal Masuk -->
+                        <div class="mb-8">
+                            <label class="block text-gray-700 text-sm font-medium mb-2" for="entryDate">
+                                Tanggal Masuk
+                            </label>
+                            <div class="input-group relative flex items-center border border-gray-300 rounded-lg overflow-hidden focus-within:border-blue-500">
+                                <i class="fas fa-calendar-alt text-gray-400 px-4"></i>
+                                <input 
+                                    type="date" 
+                                    id="entryDate" 
+                                    class="w-full py-3 px-2 focus:outline-none text-gray-700" 
+                                    required
+                                >
+                            </div>
+                        </div>
+                        
+                        <!-- Simpan Button -->
+                        <div class="flex justify-between mt-auto mb-6 mx-auto">
+                            <a href="dashboard.html" class="inline-flex items-center px-4 py-2 border border-gray-300 text-white bg-blue-500 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg hover:bg-blue-600">
+                                <i class="mr-2 padding-bottom 20px"></i> Kembali
+                            </a>
+                            <button 
+                                type="submit" 
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 text-white bg-blue-500 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg hover:bg-blue-600"
+                            >
+                                <i class="mr-2"></i> Simpan
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('addItemForm');
+            const itemName = document.getElementById('itemName');
+            const quantity = document.getElementById('quantity');
+            const entryDate = document.getElementById('entryDate');
+            
+            // Set default date to today
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            entryDate.value = formattedDate;
+            
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                if(itemName.value.trim() === '' || quantity.value.trim() === '' || entryDate.value.trim() === '') {
+                    alert('Silakan isi semua field!');
+                    return;
+                }
+                
+                // Simulate save process
+                const saveBtn = form.querySelector('button[type="submit"]');
+                const originalText = saveBtn.innerHTML;
+                
+                saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Menyimpan...';
+                saveBtn.disabled = true;
+                
+                // Simulate API call
+                setTimeout(() => {
+                    alert(`Barang berhasil ditambahkan!\n\nNama Barang: ${itemName.value}\nJumlah: ${quantity.value}\nTanggal Masuk: ${formatDate(entryDate.value)}`);
+                    
+                    // Reset form
+                    itemName.value = '';
+                    quantity.value = '';
+                    entryDate.value = formattedDate;
+                    
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.disabled = false;
+                }, 1500);
+            });
+            
+            // Format date to Indonesian format
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                const day = date.getDate();
+                const month = date.getMonth() + 1;
+                const year = date.getFullYear();
+                
+                return `${day} ${getMonthName(month)} ${year}`;
+            }
+            
+            // Get Indonesian month name
+            function getMonthName(month) {
+                const months = [
+                    'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                ];
+                return months[month - 1];
+            }
+        });
+    </script>
+</body>
+</html>

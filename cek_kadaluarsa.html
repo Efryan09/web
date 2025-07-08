@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cekstok - Cek Kadaluarsa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#1E40AF',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to bottom, #f0f9ff, #e0f2fe);
+            min-height: 100vh;
+        }
+        
+        .expiry-card {
+            transition: all 0.3s ease;
+            border-left: 4px solid;
+        }
+        
+        .expiry-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .critical {
+            border-left-color: #ef4444;
+            background: linear-gradient(to right, #fff, #fef2f2);
+        }
+        
+        .warning {
+            border-left-color: #f59e0b;
+            background: linear-gradient(to right, #fff, #fffbeb);
+        }
+        
+        .normal {
+            border-left-color: #10b981;
+            background: linear-gradient(to right, #fff, #f0fdf4);
+        }
+        
+        .days-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <div class="min-h-screen flex flex-col">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-blue-600 mb-2">Cek Kadaluarsa</h1>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex flex-1 container mx-auto px-4 py-8">
+
+            <!-- Content Area -->
+            <main class="flex-1">
+                <div class="bg-white rounded-xl shadow-md p-6 mb-8">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-8">
+                        <div class="mt-4 md:mt-0">
+                            <div class="flex items-center">
+                                <div class="flex items-center mr-4">
+                                    <div class="w-3 h-3 rounded-full bg-red-500 mr-2"></div>
+                                    <span class="text-sm">Kritis (< 7 hari)</span>
+                                </div>
+                                <div class="flex items-center mr-4">
+                                    <div class="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
+                                    <span class="text-sm">Peringatan (7-30 hari)</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
+                                    <span class="text-sm">Aman (> 30 hari)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Results Section -->
+                    <div id="resultsContainer">
+                        <div class="grid grid-cols-1 gap-4">
+                            <!-- Item cards will be added here by JavaScript -->
+                        </div>
+                        
+                        <div id="noResults" class="text-center py-12 hidden">
+                            <div class="text-blue-200 text-6xl mb-4">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <h3 class="text-xl font-medium text-gray-600">Tidak ada barang yang hampir kadaluarsa</h3>
+                            <p class="text-gray-500 mt-2">Semua barang dalam kondisi aman</p>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        <div class="flex justify-center mt-auto mb-6 mx-auto">
+            <a href="dashboard.html" class="inline-flex items-center px-4 py-2 border border-gray-300 text-white bg-blue-500 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg hover:bg-blue-600">
+                <i class="mr-2 padding-bottom 20px"></i> Kembali
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Data barang yang hampir kadaluarsa
+        const expiryItems = [
+            {
+                id: 1,
+                name: "Susu UHT Frisian Flag",
+                category: "Minuman",
+                quantity: 120,
+                expiryDate: "2024-04-05",
+                daysLeft: 3,
+                status: "critical"
+            },
+            {
+                id: 2,
+                name: "Biskuit Roma Kelapa",
+                category: "Makanan Ringan",
+                quantity: 85,
+                expiryDate: "2024-04-12",
+                daysLeft: 10,
+                status: "warning"
+            },
+            {
+                id: 3,
+                name: "Minyak Goreng Filma",
+                category: "Bahan Masakan",
+                quantity: 200,
+                expiryDate: "2024-04-20",
+                daysLeft: 18,
+                status: "warning"
+            },
+            {
+                id: 4,
+                name: "Teh Celup Sariwangi",
+                category: "Minuman",
+                quantity: 90,
+                expiryDate: "2024-05-15",
+                daysLeft: 43,
+                status: "normal"
+            },
+            {
+                id: 5,
+                name: "Mie Instan Indomie Goreng",
+                category: "Makanan Instan",
+                quantity: 300,
+                expiryDate: "2024-04-08",
+                daysLeft: 6,
+                status: "critical"
+            },
+            {
+                id: 6,
+                name: "Kopi Kapal Api",
+                category: "Minuman",
+                quantity: 110,
+                expiryDate: "2024-04-25",
+                daysLeft: 23,
+                status: "warning"
+            },
+            {
+                id: 7,
+                name: "Sabun Mandi Lifebuoy",
+                category: "Perawatan Tubuh",
+                quantity: 150,
+                expiryDate: "2025-02-28",
+                daysLeft: 326,
+                status: "normal"
+            }
+        ];
+
+        // Format tanggal menjadi "5 Apr 2024"
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const months = [
+                "Jan", "Feb", "Mar", "Apr", "Mei", "Jun", 
+                "Jul", "Agu", "Sep", "Okt", "Nov", "Des"
+            ];
+            
+            const day = date.getDate();
+            const month = months[date.getMonth()];
+            const year = date.getFullYear();
+            
+            return `${day} ${month} ${year}`;
+        }
+
+        // Tampilkan semua item
+        function displayItems(items) {
+            const container = document.querySelector('#resultsContainer .grid');
+            const noResults = document.getElementById('noResults');
+            
+            // Kosongkan kontainer
+            container.innerHTML = '';
+            
+            if (items.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            }
+            
+            noResults.classList.add('hidden');
+            
+            // Tambahkan setiap item ke kontainer
+            items.forEach(item => {
+                const daysText = item.daysLeft === 1 ? 'HARI' : 'HARI';
+                let badgeClass = '';
+                let badgeText = '';
+                
+                if (item.status === 'critical') {
+                    badgeClass = 'bg-red-100 text-red-800';
+                    badgeText = 'KRITIS';
+                } else if (item.status === 'warning') {
+                    badgeClass = 'bg-yellow-100 text-yellow-800';
+                    badgeText = 'PERINGATAN';
+                } else {
+                    badgeClass = 'bg-green-100 text-green-800';
+                    badgeText = 'AMAN';
+                }
+                
+                const card = document.createElement('div');
+                card.className = `expiry-card rounded-lg p-4 ${item.status}`;
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-start">
+                            <div class="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 mr-4">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-lg">${item.name}</h3>
+                                <div class="text-sm text-gray-500 mt-1">${item.category} • Stok: ${item.quantity}</div>
+                                <div class="flex items-center mt-3">
+                                    <i class="fas fa-calendar-day text-gray-400 mr-2"></i>
+                                    <span class="font-medium">${formatDate(item.expiryDate)}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <span class="${badgeClass} days-badge mb-2">${badgeText}</span>
+                            <div class="text-2xl font-bold ${item.status === 'critical' ? 'text-red-600' : item.status === 'warning' ? 'text-yellow-600' : 'text-green-600'}">
+                                ${item.daysLeft}
+                            </div>
+                            <div class="text-xs text-gray-500 uppercase">${daysText}</div>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+            });
+        }
+
+        // Fungsi pencarian
+        function searchItems(query) {
+            if (!query) {
+                return expiryItems;
+            }
+            
+            const lowerQuery = query.toLowerCase();
+            return expiryItems.filter(item => 
+                item.name.toLowerCase().includes(lowerQuery) ||
+                item.category.toLowerCase().includes(lowerQuery)
+            );
+        }
+
+        // Inisialisasi halaman
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tampilkan semua item
+            displayItems(expiryItems);
+            
+            // Setup pencarian
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function() {
+                const results = searchItems(this.value);
+                displayItems(results);
+            });
+            
+            // Fokus ke input pencarian
+            searchInput.focus();
+        });
+    </script>
+</body>
+</html>

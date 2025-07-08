@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Utama - CEKSTOK</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
+            min-height: 100vh;
+        }
+        
+        .dashboard-card {
+            box-shadow: 0 10px 30px rgba(0, 0, 150, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            box-shadow: 0 15px 40px rgba(0, 0, 200, 0.15);
+        }
+        
+        .btn-action {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-action:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-action:hover::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            animation: ripple 1s linear infinite;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        .header-gradient {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .wave-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            z-index: -1;
+        }
+        
+        .wave-bg svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+        
+        .wave-bg .shape-fill {
+            fill: #3b82f6;
+        }
+    </style>
+</head>
+<body class="relative">
+    <div class="wave-bg">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".05" class="shape-fill"></path>
+            <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".1" class="shape-fill"></path>
+            <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" opacity=".15" class="shape-fill"></path>
+        </svg>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-bold text-blue-600 mb-2">Dashboard Utama</h1>
+                <p class="text-gray-600">Kelola stok barang dengan mudah dan efisien</p>
+            </div>
+            
+            <div class="dashboard-card bg-white">
+                <div class="p-6 md:p-8">
+                    <!-- Action Buttons -->
+                    <div class="flex flex-col gap-y-3">
+                        <!-- Tambah Barang -->
+                         <a href="tambah_brg.html">
+                             <button class="btn-action w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-5 px-6 rounded-lg flex items-center justify-between">
+                                    <div class="flex items-center">
+                                     <div class="w-12 h-12 rounded-lg bg-blue-400 flex items-center justify-center mr-4">
+                                         <i class="fas fa-plus text-xl"></i>
+                                        </div>
+                                        <span class="text-xl">Tambah Barang</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </a>
+                        
+                        <!-- Edit Barang -->
+                         <a href="edit_brg.html">
+                            <button class="btn-action w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-5 px-6 rounded-lg flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-lg bg-blue-400 flex items-center justify-center mr-4">
+                                        <i class="fas fa-edit text-xl"></i>
+                                    </div>
+                                    <span class="text-xl">Edit Barang</span>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </a>
+                        
+                        <!-- Cari Barang -->
+                         <a href="cari_brg.html">
+                             <button class="btn-action w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-5 px-6 rounded-lg flex items-center justify-between">
+                                 <div class="flex items-center">
+                                     <div class="w-12 h-12 rounded-lg bg-blue-400 flex items-center justify-center mr-4">
+                                         <i class="fas fa-search text-xl"></i>
+                                        </div>
+                                        <span class="text-xl">Cari Barang</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </a>
+                        
+                        <!-- Daftar Barang -->
+                        <a href="daftar_brg.html">
+                            <button class="btn-action w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-5 px-6 rounded-lg flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-lg bg-blue-400 flex items-center justify-center mr-4">
+                                        <i class="fas fa-list text-xl"></i>
+                                    </div>
+                                    <span class="text-xl">Daftar Barang</span>
+                                </div>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </a>
+                        
+                        <!-- Cek Kadaluarsa -->
+                        <a href="cek_kadaluarsa.html">
+                            <button class="btn-action w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-5 px-6 rounded-lg flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <div class="w-12 h-12 rounded-lg bg-blue-400 flex items-center justify-center mr-4">
+                                        <i class="fas fa-clock text-xl"></i>
+                                    </div>
+                                    <span class="text-xl">Cek Kadaluarsa</span>
+                                </div>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </div>
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+    <script>
+        // Animation for action buttons
+        document.querySelectorAll('.btn-action').forEach(button => {
+            button.addEventListener('click', function() {
+                // Add ripple effect
+                const ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 600ms linear';
+                ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+                
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = event.clientX - rect.left - size/2;
+                const y = event.clientY - rect.top - size/2;
+                
+                ripple.style.width = size + 'px';
+                ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                
+                this.appendChild(ripple);
+                
+                // Remove ripple after animation
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+                
+                // Simulate navigation
+                const action = this.querySelector('.text-xl').textContent;
+                alert(`Navigasi ke halaman: ${action}`);
+            });
+        });
+    </script>
+</body>
+</html>

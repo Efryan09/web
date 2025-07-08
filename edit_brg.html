@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cekstok - Edit Barang</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 font-sans">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-blue-600 mb-2">Edit Barang</h1>
+        </div>
+        <!-- Main Content -->
+        <div class="flex flex-1">
+            
+            <!-- Content Area -->
+            <main class="flex-1 p-6">
+                <div class="bg-white rounded-lg shadow-md p-6 max-w-2xl mx-auto">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-bold text-gray-800">Edit Barang</h2>
+                        <a href="#" class="text-sm text-gray-500 hover:text-primary">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </div>
+                    
+                    <form id="editForm">
+                        <div class="mb-4">
+                            <label for="nama" class="block text-gray-700 font-medium mb-2">Nama Barang</label>
+                            <input type="text" id="nama" name="nama" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                value="Susu UHT Frisian Flag" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="jumlah" class="block text-gray-700 font-medium mb-2">Jumlah</label>
+                            <input type="number" id="jumlah" name="jumlah" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                value="120" min="1" required>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="tanggal" class="block text-gray-700 font-medium mb-2">Tanggal Masuk</label>
+                            <input type="date" id="tanggal" name="tanggal" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                value="2024-04-01" required>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="kadaluarsa" class="block text-gray-700 font-medium mb-2">Tanggal Kadaluarsa</label>
+                            <input type="date" id="kadaluarsa" name="kadaluarsa" 
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                                value="2024-07-05" required>
+                        </div>
+                        
+                        <div class="flex justify-between mt-auto mb-6 mx-auto">
+                            <a href="dashboard.html" class="inline-flex items-center px-4 py-2 border border-gray-300 text-white bg-blue-500 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg hover:bg-blue-600">
+                                <i class="mr-2 padding-bottom 20px"></i> Kembali
+                            </a>
+                            <button type="button" id="updateBtn" 
+                                class="inline-flex items-center px-4 py-2 border border-gray-300 text-white bg-blue-500 rounded-lg transition-all duration-300 ease-in-out transform hover:-translate-y-1 hover:shadow-lg hover:bg-blue-600">
+                                Update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle form submission
+            const updateBtn = document.getElementById('updateBtn');
+            const toast = document.getElementById('toast');
+            
+            updateBtn.addEventListener('click', function() {
+                // Get form values
+                const nama = document.getElementById('nama').value;
+                const jumlah = document.getElementById('jumlah').value;
+                const tanggal = document.getElementById('tanggal').value;
+                const kadaluarsa = document.getElementById('kadaluarsa').value;
+                
+                // Validate form
+                if(!nama || !jumlah || !tanggal || !kadaluarsa) {
+                    alert('Harap isi semua field!');
+                    return;
+                }
+                
+                // Show success notification
+                toast.classList.remove('opacity-0', 'translate-y-20');
+                toast.classList.add('opacity-100', 'translate-y-0');
+                
+                // Hide notification after 3 seconds
+                setTimeout(() => {
+                    toast.classList.remove('opacity-100', 'translate-y-0');
+                    toast.classList.add('opacity-0', 'translate-y-20');
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
